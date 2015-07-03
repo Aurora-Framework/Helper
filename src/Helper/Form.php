@@ -131,8 +131,4 @@ class Form
       return $attr;
    }
 
-   public function tag($name, $content = null, $attributes = [])
-	{
-		return '<' . $name . (($attributes !== null) ? $this->attributes($attributes) : "") . (($content === null) ? ($this->xhtml ? ' />' : '>') : '>' . $content . '</' . $name . '>');
-	}
 }
