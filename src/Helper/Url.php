@@ -110,11 +110,11 @@ class Url
 
 	public function asset($asset)
 	{
-		return sprintf($this->baseUri.'assets/%s', ltrim($asset, '/'));
+		return sprintf($this->baseUri.'/assets/%s', ltrim($asset, '/'));
 	}
 
-	public function base($to)
+	public function base($to = "")
 	{
-		return sprintf($this->baseUri.'%s', ltrim($to, '/'));
+		return sprintf($this->baseUri.'/%s', ltrim($to, '/'));
 	}
 }
