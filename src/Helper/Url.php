@@ -6,7 +6,7 @@ use Aurora\Helper\Exception\RouteNotFoundException;
 
 class Url
 {
-
+	protected $baseUri;
 	protected $routes;
 	protected $matchTypes = [
 		'any' => "([^\/]++)",
@@ -17,10 +17,10 @@ class Url
 	];
 
 
-	public function __construct($routes = [], $matchTypes = null)
+	public function __construct($routes = [], $matchTypes = null, $baseUri = "/")
 	{
 		$this->routes = $routes;
-
+		$this->baseUri = $baseUri;
 		if ($matchTypes !== null) {
 			$this->matchTypes = $matchTypes;
 		}
@@ -106,5 +106,15 @@ class Url
 		$segments = $this->normalize($url);
 
 		return $this->replaceWithParameters($url, $segments, $parameters, $definitions);
+	}
+
+	public function asset($asset)
+	{
+		return sprintf($this->baseUri.'assets/%s', ltrim($asset, '/'));
+	}
+
+	public function base($to)
+	{
+		return sprintf($this->baseUri.'%s', ltrim($to, '/'));
 	}
 }
