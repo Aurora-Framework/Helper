@@ -92,7 +92,9 @@ class HTML
 		if (!isset(static::$tags[$name])) {
 			throw new BadMethodCallException(vsprintf("Call to undefined method HTML::%s().", [$name]));
 		}
+
 		$fn = static::$tags[$name];
+
 		return $fn(...array_merge([$this], $arguments));
 	}
 }

@@ -1,50 +1,19 @@
 <?php
 
-/**
- * Aurora - Framework
- *
- * Aurora is fast, simple, extensible Framework
- *
- *
- * @category   Framework
- * @package    Aurora
- * @author     VeeeneX <veeenex@gmail.com>
- * @copyright  2015 Caroon
- * @license    MIT
- * @version    0.1.3
- * @link       http://caroon.com/Aurora
- *
- */
-
 namespace Aurora\Helper;
 
-/**
- * Arr
- *
- * @category   Common
- * @package    Aurora
- * @author     VeeeneX <veeenex@gmail.com>
- * @copyright  2015 Caroon
- * @license    MIT
- * @version    0.1.3
- *
- */
-
-/**
- * https://github.com/fuel/core/blob/1.8/develop/classes/arr.php
- */
 class Arr
 {
 	use StatefulTrait;
 
-	public static function create($data = array())
-	{
-		return new static($data);
-	}
-
 	public function __construct($data = array())
 	{
 		$this->data = $data;
+	}
+
+	public static function create($data = array())
+	{
+		return new static($data);
 	}
 
 	public function shuffle()
@@ -81,6 +50,7 @@ class Arr
 			}
 			array_pop($curr_key);
 		}
+
 		return $return;
 	}
 
@@ -98,6 +68,7 @@ class Arr
 	public function isMulti($all_keys = false)
 	{
 		$values = array_filter($this->data, 'is_array');
+		
 		return $all_keys ? count($this->data) === count($values) : count($values) > 0;
 	}
 

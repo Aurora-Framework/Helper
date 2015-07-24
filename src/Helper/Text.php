@@ -4,7 +4,6 @@ namespace Aurora\Helper;
 
 class Text
 {
-
    public static function limitWords($str, $limit = 15, $end = "")
    {
       return preg_replace('/((\w+\W*|| [\p{L}]+\W*){'.($limit-1).'}(\w+))(.*)/', '${1}', $str).$end;

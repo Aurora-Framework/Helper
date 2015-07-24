@@ -16,7 +16,6 @@ class Url
 		'alphanum' => "([0-9A-Za-z]++)"
 	];
 
-
 	public function __construct($routes = [], $matchTypes = null, $baseUri = "/")
 	{
 		$this->routes = $routes;
@@ -26,14 +25,8 @@ class Url
 		}
 	}
 
-
 	protected function normalize($route)
 	{
-		//make sure that all urls have the same structure
-		/*if ($route[0] !== '/') {
-			$route = '/' . $route;
-		}*/
-
 		/* Fix trailling shash */
 		if (mb_substr($route, -1, 1) == '/') {
 			$route = substr($route, 0, -1);
@@ -52,7 +45,7 @@ class Url
 					'name' => explode('}', mb_substr($v, 2))[0],
 					'use' => '?'
 				];
-			} elseif (($v[0]) === '{') {
+			} else if (($v[0]) === '{') {
 				$ret[] = [
 					'name' => explode('}', mb_substr($v, 1))[0],
 					'use' => "*"
