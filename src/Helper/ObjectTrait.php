@@ -4,7 +4,7 @@ namespace Aurora\Helper;
 
 use ArrayAccess;
 
-trait Object
+trait ObjectTrait
 {
 	/**
  	*	Stores Object data
