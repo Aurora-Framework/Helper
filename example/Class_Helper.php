@@ -4,7 +4,7 @@ require __DIR__ . "./../vendor/autoload.php"; // Autoload files using Composer
 
 class HelpMe
 {
-   use Aurora\Helper\StatefulTrait;
+   use Aurora\Helper\Object;
 }
 
 $HelpMe = new HelpMe();

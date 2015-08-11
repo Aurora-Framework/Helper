@@ -11,7 +11,7 @@ class Encryption
 		$this->key = hash('sha256', $key, true);
 	}
 
-	public static function encrypt($value)
+	public function encrypt($value)
 	{
 		return strtr(
 			base64_encode(
@@ -26,7 +26,7 @@ class Encryption
 		);
 	}
 
-	public static function decrypt($value)
+	public function decrypt($value)
 	{
 		return trim(
 			mcrypt_decrypt(

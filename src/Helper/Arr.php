@@ -4,7 +4,7 @@ namespace Aurora\Helper;
 
 class Arr
 {
-	use StatefulTrait;
+	use Object;
 
 	public function __construct($data = array())
 	{
@@ -68,7 +68,7 @@ class Arr
 	public function isMulti($all_keys = false)
 	{
 		$values = array_filter($this->data, 'is_array');
-		
+
 		return $all_keys ? count($this->data) === count($values) : count($values) > 0;
 	}
 
