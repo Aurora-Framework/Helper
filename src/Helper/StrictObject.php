@@ -4,9 +4,9 @@ namespace Aurora\Helper;
 
 use ArrayAccess;
 
-class Object implements ArrayAccess
+class StrictObject implements ArrayAccess
 {
-    private $strict = false;
+    private $strict = true;
 
     use ObjectTrait,
         ArrayTrait,

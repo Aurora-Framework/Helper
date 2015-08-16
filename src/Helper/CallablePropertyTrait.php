@@ -2,14 +2,15 @@
 
 namespace Aurora\Helper;
 
-trait CallableProperty
+trait CallablePropertyTrait
 {
-   public function __call($method, $args)
-   {
-      if (isset($this[$method])
-         && is_callable($this->$method)
-      ) {
-         return call_user_func_array($this->$method, $args);
-      }
-   }
+    public function __call($method, $arguments)
+    {
+        if (isset($this->{$method})
+            && is_callable($this->{$method})
+        ) {
+            $fn = $this->{$method};
+            return $fn(...$arguments);
+        }
+    }
 }

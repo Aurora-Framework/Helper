@@ -4,14 +4,10 @@ namespace Aurora\Helper;
 
 class String
 {
-	const ALNUM = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-	const ALPHA = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-	const HEXDEC = '0123456789abcdef';
-
+	const ALNUM   = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	const ALPHA   = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	const HEXDEC  = '0123456789abcdef';
 	const NUMERIC = '0123456789';
-
 	const SYMBOLS = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
 
 	public static function slug($string, $keepCase = false, $replaceWith = "-")
@@ -40,8 +36,7 @@ class String
 
 		$visible = mb_substr($string, -$visible);
 
-		return str_pad($visible,
-			(mb_strlen($string) + ( strlen($visible) - mb_strlen($visible) )), $mask, STR_PAD_LEFT);
+		return str_pad($visible, (mb_strlen($string) + ( strlen($visible) - mb_strlen($visible) )), $mask, STR_PAD_LEFT);
 	}
 
 	public static function random($pool = String::ALNUM, $length = 32)

@@ -9,17 +9,18 @@ class Url
 	protected $baseUri;
 	protected $routes;
 	protected $matchTypes = [
-		'any' => "([^\/]++)",
-		'num' => "([0-9]++)",
-		'int' => "([0-9]++)",
-		'all' => "(.*)",
+		'any'      => "([^\/]++)",
+		'num'      => "([0-9]++)",
+		'int'      => "([0-9]++)",
+		'all'      => "(.*)",
 		'alphanum' => "([0-9A-Za-z]++)"
 	];
 
 	public function __construct($routes = [], $matchTypes = null, $baseUri = "/")
 	{
-		$this->routes = $routes;
-		$this->baseUri = $baseUri;
+		$this->routes     = $routes;
+		$this->baseUri    = $baseUri;
+		
 		if ($matchTypes !== null) {
 			$this->matchTypes = $matchTypes;
 		}

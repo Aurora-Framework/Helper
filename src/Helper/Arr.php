@@ -2,10 +2,8 @@
 
 namespace Aurora\Helper;
 
-class Arr
+class Arr extends Object
 {
-	use Object;
-
 	public function __construct($data = array())
 	{
 		$this->data = $data;
@@ -14,23 +12,6 @@ class Arr
 	public static function create($data = array())
 	{
 		return new static($data);
-	}
-
-	public function shuffle()
-	{
-		shuffle($this->data);
-
-		return $this;
-	}
-
-	public function first()
-	{
-		return current($this->data);
-	}
-
-	public function last()
-	{
-		return end($this->data);
 	}
 
 	public function flatten($glue = ':', $reset = true, $indexed = true)
