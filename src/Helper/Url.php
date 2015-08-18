@@ -16,12 +16,15 @@ class Url
 	{
 		$segments    = $Route->segments;
 		$definitions = $Route->definitions;
-
+		$url = $Route->route;
 		foreach ($segments as $key => $row) {
 			if (isset($parameters[$row["name"]])) {
 				if ($row["use"] === "*") {
 					if (isset($definitions[$row["name"]])) {
-						if (!preg_match($this->matchTypes[$definitions[$row["name"]]], $parameters[$row["name"]])) {
+						$definition = $definitions[$row["name"]];
+						$regex = ($definition[0] === "(") ? $definition : $this->Router->getMatchType($definition, "(.*)");
+
+						if (!preg_match($regex, $parameters[$row["name"]])) {
 							throw new \UnexpectedValueException;
 						}
 					}
@@ -42,8 +45,11 @@ class Url
 
 	public function get($name, $parameters = [])
 	{
-		$Route = $this->routes[$name];
-		if (!isset($this->routes[$name]["segments"])) {
+		if (!isset($this->Router->rawRoutes[$name])) {
+			throw new RouteNotFoundException("Route with name or route: {$name} wasn't found", 1);
+		}
+		$Route = $this->Router->rawRoutes[$name];
+		if (!isset($this->Router->rawRoutes[$name]["segments"])) {
 			$Route->segments  = $this->Router->normalize($name);
 		}
 		return $this->replaceWithParameters($Route, $parameters);
