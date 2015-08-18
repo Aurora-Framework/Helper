@@ -3,62 +3,20 @@
 namespace Aurora\Helper;
 
 use Aurora\Helper\Exception\RouteNotFoundException;
+use Aurora\Router;
 
 class Url
 {
-	protected $baseUri;
-	protected $routes;
-	protected $matchTypes = [
-		'any'      => "([^\/]++)",
-		'num'      => "([0-9]++)",
-		'int'      => "([0-9]++)",
-		'all'      => "(.*)",
-		'alphanum' => "([0-9A-Za-z]++)"
-	];
-
-	public function __construct($routes = [], $matchTypes = null, $baseUri = "/")
+	public function __construct(Router $Router)
 	{
-		$this->routes     = $routes;
-		$this->baseUri    = $baseUri;
-		
-		if ($matchTypes !== null) {
-			$this->matchTypes = $matchTypes;
-		}
+		$this->Router     = $Router;
 	}
 
-	protected function normalize($route)
+	protected function replaceWithParameters($Route, $parameters = [])
 	{
-		/* Fix trailling shash */
-		if (mb_substr($route, -1, 1) == '/') {
-			$route = substr($route, 0, -1);
-		}
+		$segments    = $Route->segments;
+		$definitions = $Route->definitions;
 
-		$result = explode('/', $route);
-		$result[0] = "/";
-		$ret = [];
-		//check for dynamic and optional parameters
-		foreach ($result as $v) {
-			if (!$v) {
-				continue;
-			}
-			if ($v[0] === "?") {
-				$ret[] = [
-					'name' => explode('}', mb_substr($v, 2))[0],
-					'use' => '?'
-				];
-			} else if (($v[0]) === '{') {
-				$ret[] = [
-					'name' => explode('}', mb_substr($v, 1))[0],
-					'use' => "*"
-				];
-			}
-		}
-
-		return $ret;
-	}
-
-	protected function replaceWithParameters($url, $segments, $parameters = [], $definitions = [])
-	{
 		foreach ($segments as $key => $row) {
 			if (isset($parameters[$row["name"]])) {
 				if ($row["use"] === "*") {
@@ -84,31 +42,30 @@ class Url
 
 	public function get($name, $parameters = [])
 	{
-		if (!isset($this->routes[$name]["route"])) {
-			throw new RouteNotFoundException;
+		$Route = $this->routes[$name];
+		if (!isset($this->routes[$name]["segments"])) {
+			$Route->segments  = $this->Router->normalize($name);
 		}
-
-		$url         = $this->routes[$name]["route"];
-		$definitions = $this->routes[$name]["definitions"];
-		$segments    = $this->normalize($this->routes[$name]["route"]);
-
-		return $this->replaceWithParameters($url, $segments, $parameters, $definitions);
-	}
-
-	public function withRoute($url, $parameters = [], $definitions = [])
-	{
-		$segments = $this->normalize($url);
-
-		return $this->replaceWithParameters($url, $segments, $parameters, $definitions);
+		return $this->replaceWithParameters($Route, $parameters);
 	}
 
 	public function asset($asset)
 	{
-		return sprintf($this->baseUri.'/assets/%s', ltrim($asset, '/'));
+		return sprintf($this->Router->baseUri.'/assets/%s', ltrim($asset, '/'));
 	}
 
 	public function base($to = "")
 	{
-		return sprintf($this->baseUri.'/%s', ltrim($to, '/'));
+		return sprintf($this->Router->baseUri.'/%s', ltrim($to, '/'));
+	}
+
+	public function url($to = "")
+	{
+		return sprintf($this->Router->baseUri.'/%s', ltrim($to, '/'));
+	}
+
+	public function link($to = "")
+	{
+		return sprintf($this->Router->baseUri.'/%s', ltrim($to, '/'));
 	}
 }

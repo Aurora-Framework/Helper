@@ -199,7 +199,7 @@ trait ArrayTrait
                     throw new \RuntimeException("Can not set value at this path ($path) because is not array.");
                 }
             } else {
-                unset($keys[$key = key($keys)]);
+                $key = $keys[$i];
                 if (!isset($at[$key])) {
                     $at[$key] = [];
                 }
@@ -239,7 +239,7 @@ trait ArrayTrait
             if (($keyCount-1) === $i) {
                 return isset($at[$keys[$i]]);
             } else {
-                unset($keys[$key = key($keys)]);
+                $key = $keys[$i];
                 if (!isset($at[$key])) {
                     $at[$key] = [];
                 }
@@ -274,7 +274,7 @@ trait ArrayTrait
 			}
 		}
 
-		return (is_object($return) && method_exists($return, '__invoke')) ? $return($this) : $return;
+		return $return;
 	}
 
 	/**
@@ -295,14 +295,14 @@ trait ArrayTrait
                 unset($at[$keys[$i]]);
                 return true;
             } else {
-                unset($keys[$key = key($keys)]);
+                $key = $keys[$i];
                 if (!isset($at[$key])) {
                     $at[$key] = [];
                 }
                 $at =& $at[$key];
             }
         }
-        
+
 		return false;
 	}
 
